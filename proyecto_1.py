@@ -46,8 +46,8 @@ for i in range(0, m):
     for j in range(0, n):
         cij.append((i + 1, j + 1, choice(p)))
 
+#Genera funcion objetivo con la suma de las variables de decision Xij multiplicado por su respectiva preferencia Cij
 fo = "max "
-
 for i, j, c in cij:
     if c < 0:
         p = "(" + str(c) + ")"
@@ -57,4 +57,22 @@ for i, j, c in cij:
     if(i != m or j != n):
         fo += " + "
 
-print(fo)
+const_si = ""
+for i, h in si:
+    suma_xij = ""
+    for j in range(1, m + 1):
+        suma_xij += "X" + str(i) + str(j)
+        if(j != m):
+            suma_xij += " + "
+    const_si += suma_xij + " <= " + str(h) + "\n"
+
+
+const_dj = ""
+for i, h in dj:
+    suma_xji = ""
+    for j in range(1, n + 1):
+        suma_xji += "X" + str(j) + str(i)
+        if(j != n):
+            suma_xji = " + "
+    const_dj += suma_xij + " = " + str(h) + "\n"
+
