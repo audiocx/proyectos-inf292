@@ -80,13 +80,15 @@ def generadorLINDO(m, n, ffact=0):
     # Genera funcion objetivo con la suma de las variables de decision Xij multiplicado por su respectiva preferencia Cij
     fo = "max "
     for c, i, j in cij:
-        if c < 0:
-            p = "(" + str(c) + ")"
-        else:
-            p = str(c)
+        p = ""
+        if i != 1 or j != 1:
+            if c < 0:
+                p = str(-c)
+                fo += " - "
+            else:
+                p = str(c)
+                fo += " + "
         fo += p + " X" + str(i) + "_" + str(j)
-        if(i != m or j != n):
-            fo += " + "
     fo += "\n"
 
     # Genera las restricciones de oferta
@@ -127,4 +129,4 @@ def txtLINDO(filepath, text):
 
 
 txtLINDO(r'C:\Users\claud\Desktop\2022-1\INF292 (opti)\proyecto1\5x5ffact.txt',
-         generadorLINDO(5, 5, 1))
+         generadorLINDO(5, 5, 0))
