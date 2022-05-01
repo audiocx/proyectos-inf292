@@ -81,13 +81,16 @@ def generadorLINDO(m, n, ffact=0):
     fo = "max "
     for c, i, j in cij:
         p = ""
-        if i != 1 or j != 1:
-            if c < 0:
-                p = str(-c)
-                fo += " - "
+        if c < 0:
+            if i == 1 and j == 1:
+                p = "-" + str(-c)
             else:
+                p = " - " + str(-c)
+        else:
+            if i == 1 and j == 1:
                 p = str(c)
-                fo += " + "
+            else:
+                p = " + " + str(c)
         fo += p + " X" + str(i) + "_" + str(j)
     fo += "\n"
 
@@ -95,9 +98,9 @@ def generadorLINDO(m, n, ffact=0):
     const_si = ""
     for i, h in si:
         suma_xij = ""
-        for j in range(1, m + 1):
+        for j in range(1, n + 1):
             suma_xij += "X" + str(i) + "_" + str(j)
-            if(j != m):
+            if(j != n):
                 suma_xij += " + "
         const_si += suma_xij + " <= " + str(h) + "\n"
 
@@ -105,9 +108,9 @@ def generadorLINDO(m, n, ffact=0):
     const_dj = ""
     for i, h in dj:
         suma_xji = ""
-        for j in range(1, n + 1):
+        for j in range(1, m + 1):
             suma_xji += "X" + str(j) + "_" + str(i)
-            if(j != n):
+            if(j != m):
                 suma_xji += " + "
         const_dj += suma_xji + " = " + str(h) + "\n"
 
@@ -128,5 +131,5 @@ def txtLINDO(filepath, text):
         f.write(text)
 
 
-txtLINDO(r'C:\Users\claud\Desktop\2022-1\INF292 (opti)\proyecto1\5x5ffact.txt',
-         generadorLINDO(5, 5, 0))
+txtLINDO(r'C:\Users\claud\Desktop\2022-1\INF292 (opti)\proyecto1\4x3.txt',
+         generadorLINDO(4, 3, 0))
