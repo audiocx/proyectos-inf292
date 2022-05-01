@@ -52,6 +52,8 @@ def generadorLINDO(m, n, ffact=0):
     # -----------------------------------------------------------------------------------------------------------------
     # Factibilidad
     # Asegurarse de que la suma de ofertas >= suma de demandas
+    fact = True
+
     SumaS = 0
     SumaD = 0
     for t in si:
@@ -62,6 +64,7 @@ def generadorLINDO(m, n, ffact=0):
 
     # crear fuente fantasma?
     if(SumaS < SumaD):
+        fact = False
         print("Problema infactible: demanda menor a oferta")
     else:
         print("Problema factible: demanda mayor o igual a oferta")
@@ -74,7 +77,8 @@ def generadorLINDO(m, n, ffact=0):
             if i == j_dj and c > 0:
                 n_pref += 1
         if n_pref == 0:
-            print("Problema infactible: Nadie quiere hacer la ayudantia " + i)
+            print("Problema infactible: Nadie quiere hacer la ayudantia " + str(i))
+            fact = False
     # -----------------------------------------------------------------------------------------------------------------
 
     # Genera funcion objetivo con la suma de las variables de decision Xij multiplicado por su respectiva preferencia Cij
@@ -115,7 +119,7 @@ def generadorLINDO(m, n, ffact=0):
         const_dj += suma_xji + " = " + str(h) + "\n"
 
     print(fo + "st\n" + const_si + const_dj)
-    return fo + "st\n" + const_si + const_dj
+    return (fo + "st\n" + const_si + const_dj, fact)
 
 # Nombre: txtLINDO
 #   * Genera un archivo en la ruta especificada con el modelo LINDO escrito
@@ -131,5 +135,15 @@ def txtLINDO(filepath, text):
         f.write(text)
 
 
-txtLINDO(r'C:\Users\claud\Desktop\2022-1\INF292 (opti)\proyecto1\4x3.txt',
-         generadorLINDO(4, 3, 0))
+M_SUP = 20
+N_SUP = 20
+directorio = r'C:\Users\claud\Desktop\2022-1\INF292 (opti)\proyecto1\modelos\\'
+
+for m in range(2, M_SUP + 1):
+    for n in range(2, N_SUP + 1):
+        texto, fact = generadorLINDO(m, n, 0)
+        strfact = "infact"
+        if fact:
+            strfact = "fact"
+        nombre_archivo = strfact + str(m) + "x" + str(n) + ".ltx"
+        txtLINDO(directorio + nombre_archivo, texto)
