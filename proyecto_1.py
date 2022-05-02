@@ -1,5 +1,4 @@
-from random import *
-from math import *
+from random import choice, random
 
 # Nombre: generadorLPSolve
 #   * Genera un texto para usarse en lp_solve dependiendo de los parametros introducidos
@@ -115,7 +114,7 @@ def generadorLPSolve(m, n, ffact=0):
         const_dj += "ayudantia" + \
             str(i) + ": " + suma_xji + " = " + str(h) + ";\n"
 
-    print(fo + const_si + const_dj)
+    #print(fo + const_si + const_dj)
     return (fo + const_si + const_dj, fact)
 
 # Nombre: txtLPSolve
@@ -132,12 +131,15 @@ def txtLPSolve(filepath, text):
         f.write(text)
 
 
-M_SUP = 20
-N_SUP = 20
+# Definimos nuestros limites superiores y el directorio donde se guardaran los casos
+M_SUP = 100
+N_SUP = 100
 directorio = r'C:\Users\claud\Desktop\2022-1\INF292 (opti)\proyecto1\modelos\\'
 
-for m in range(2, M_SUP + 1):
-    for n in range(2, N_SUP + 1):
+# Iteramos por cada archivo .lp mxn a crear
+for m in range(1, M_SUP + 1):
+    for n in range(1, N_SUP + 1):
+        print(str(m) + "x" + str(n))
         texto, fact = generadorLPSolve(m, n, 0)
         strfact = "infact"
         if fact:
