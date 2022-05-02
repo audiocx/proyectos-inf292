@@ -13,9 +13,6 @@ from random import choice, random
 
 
 def generadorLPSolve(m, n, ffact=0):
-    # Posibles horas demandadas por cada ayudantia
-    dc = [7, 8, 15]
-
     # Listas de ofertas (si), demandas (dj) y preferencias (cij)
     si = []
     dj = []
@@ -33,6 +30,9 @@ def generadorLPSolve(m, n, ffact=0):
     else:
         for i in range(0, m):
             si.append((i + 1, 15))
+
+    # Posibles horas demandadas por cada ayudantia
+    dc = [7, 8, 15]
 
     # Cantidad de horas demandadas por el nodo i como tupla (indice, horas)
     for i in range(0, n):
