@@ -1,13 +1,8 @@
 from random import *
 from math import *
 
-# Cantidad de estudiantes
-#m = int(input('Cantidad de estudiantes: '))
-# Cantidad de ayudantias
-#n = int(input('Cantidad de ayudantias: '))
-
-# Nombre: generadorLINDO
-#   * Genera un texto para usarse en LINDO dependiendo de los parametros introducidos
+# Nombre: generadorLPSolve
+#   * Genera un texto para usarse en lp_solve dependiendo de los parametros introducidos
 # Inputs:
 #   * m: numero de estudiantes postulando a ayudantia
 #   * n: numero de ayudantias disponibles
@@ -15,10 +10,10 @@ from math import *
 #           0 si se quiere cantidad de horas aleatorias
 #           1 si se quiere 15 horas por cada estudiante
 # Returns:
-#   * string: texto ASCII del modelo que se usara en LINDO
+#   * string: texto ASCII del modelo que se usara en lp_solve
 
 
-def generadorLINDO(m, n, ffact=0):
+def generadorLPSolve(m, n, ffact=0):
     # Posibles horas demandadas por cada ayudantia
     dc = [7, 8, 15]
 
@@ -82,7 +77,7 @@ def generadorLINDO(m, n, ffact=0):
     # -----------------------------------------------------------------------------------------------------------------
 
     # Genera funcion objetivo con la suma de las variables de decision Xij multiplicado por su respectiva preferencia Cij
-    fo = "max "
+    fo = "max: "
     for c, i, j in cij:
         p = ""
         if c < 0:
@@ -96,7 +91,7 @@ def generadorLINDO(m, n, ffact=0):
             else:
                 p = " + " + str(c)
         fo += p + " X" + str(i) + "_" + str(j)
-    fo += "\n"
+    fo += ";\n"
 
     # Genera las restricciones de oferta
     const_si = ""
@@ -106,7 +101,8 @@ def generadorLINDO(m, n, ffact=0):
             suma_xij += "X" + str(i) + "_" + str(j)
             if(j != n):
                 suma_xij += " + "
-        const_si += suma_xij + " <= " + str(h) + "\n"
+        const_si += "estudiante" + \
+            str(i) + ": " + suma_xij + " <= " + str(h) + ";\n"
 
     # Genera las restricciones de demanda
     const_dj = ""
@@ -116,12 +112,13 @@ def generadorLINDO(m, n, ffact=0):
             suma_xji += "X" + str(j) + "_" + str(i)
             if(j != m):
                 suma_xji += " + "
-        const_dj += suma_xji + " = " + str(h) + "\n"
+        const_dj += "ayudantia" + \
+            str(i) + ": " + suma_xji + " = " + str(h) + ";\n"
 
-    print(fo + "st\n" + const_si + const_dj)
-    return (fo + "st\n" + const_si + const_dj, fact)
+    print(fo + const_si + const_dj)
+    return (fo + const_si + const_dj, fact)
 
-# Nombre: txtLINDO
+# Nombre: txtLPSolve
 #   * Genera un archivo en la ruta especificada con el modelo LINDO escrito
 # Inputs:
 #   * filepath: ruta donde se escribira el archivo
@@ -130,7 +127,7 @@ def generadorLINDO(m, n, ffact=0):
 #   * No retorna
 
 
-def txtLINDO(filepath, text):
+def txtLPSolve(filepath, text):
     with open(filepath, 'w') as f:
         f.write(text)
 
@@ -141,9 +138,9 @@ directorio = r'C:\Users\claud\Desktop\2022-1\INF292 (opti)\proyecto1\modelos\\'
 
 for m in range(2, M_SUP + 1):
     for n in range(2, N_SUP + 1):
-        texto, fact = generadorLINDO(m, n, 0)
+        texto, fact = generadorLPSolve(m, n, 0)
         strfact = "infact"
         if fact:
             strfact = "fact"
-        nombre_archivo = strfact + str(m) + "x" + str(n) + ".ltx"
-        txtLINDO(directorio + nombre_archivo, texto)
+        nombre_archivo = strfact + str(m) + "x" + str(n) + ".txt"
+        txtLPSolve(directorio + nombre_archivo, texto)
