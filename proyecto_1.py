@@ -142,5 +142,5 @@ for m in range(2, M_SUP + 1):
         strfact = "infact"
         if fact:
             strfact = "fact"
-        nombre_archivo = strfact + str(m) + "x" + str(n) + ".txt"
+        nombre_archivo = strfact + str(m) + "x" + str(n) + ".lp"
         txtLPSolve(directorio + nombre_archivo, texto)
