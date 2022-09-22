@@ -5,7 +5,7 @@
 * Video proyecto 3: https://youtu.be/_sYfAjkPdp8
 
 # Notas y comentarios:
-** Proyecto 1 (nota = 92/100):
+* Proyecto 1 (nota = 92/100):
 En general esta bien el proyecto, solo les mencionaré algunos detalles:
 
 Gastaron mucho tiempo en explicar el código. No es necesario que sean tan detallistas en esa parte.
@@ -14,10 +14,10 @@ Tengo una especial duda con respecto al ultimo caso, el especial que le llaman u
 
 Las conclusioens finales no fueron muy claras. Creo que se enrredaron un poco al explicarlas.
 
-** Proyecto 2 (nota = 97/100):
+* Proyecto 2 (nota = 97/100):
 Muy buen trabajo, felicitaciones, interesante modelo mixto incluyendo la "novedad" de la función objetivo, sólo sugeriría dedicar menos tiempo a la explicación del código aumentando estudio de casos y análisis de resultados.
 
-** Proyecto 3 (nota = 78/100):
+* Proyecto 3 (nota = 78/100):
 En general, todo bien explicado.
 
 No mostraron resultados que expliquen, o traten de explicar,  como afecta la aleatoriedad de los parámetros en el tiempo de ejecución o calidad de la solución.
